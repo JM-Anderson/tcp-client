@@ -17,10 +17,10 @@ void Client::readTcpData()
     while (!socket->atEnd()){
         data = socket->read(8);
         emit dataOutput(&data);
+        outFile->write(data);
     }
 
     emit logOutput("End of data");
-
 }
 
 void Client::tcpConnect(const QHostAddress ipAddress, const quint16 port) {
@@ -31,6 +31,7 @@ void Client::tcpConnect(const QHostAddress ipAddress, const quint16 port) {
 void Client::onDisconnected()
 {
     emit logOutput("Closing socket");
+    outFile->close();
 }
 
 void Client::onConnected()
@@ -38,4 +39,6 @@ void Client::onConnected()
     emit logOutput(QString("Connected to: %1:%2")
                    .arg(socket->peerAddress().toString())
                    .arg(socket->peerPort()));
+
+    outFile->open(QIODevice::WriteOnly);
 }
