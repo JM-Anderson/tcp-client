@@ -28,8 +28,13 @@ private slots:
 
     void on_clearConsoleButton_clicked();
 
+    void on_sendButton_clicked();
+
+    void on_msgEdit_returnPressed();
+
 private:
     Ui::Console *ui;
+    Client* client;
 };
 
 #endif // CONSOLE_H

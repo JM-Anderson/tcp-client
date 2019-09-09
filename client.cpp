@@ -23,6 +23,19 @@ void Client::readTcpData()
     emit logOutput("End of data");
 }
 
+void Client::sendMsg(QByteArray msg) {
+    if (msg.size() < 1) {
+        logOutput("Can't send empty message");
+        return;
+    }
+    socket->write(msg);
+    if (socket->waitForBytesWritten()) {
+        emit logOutput("Message sent");
+    } else {
+        emit logOutput("Message not sent");
+    }
+}
+
 void Client::tcpConnect(const QHostAddress ipAddress, const quint16 port) {
     socket->abort();
     socket->connectToHost(ipAddress, port);

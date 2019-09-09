@@ -13,6 +13,7 @@ class Client : public QObject
 public:
     Client(QObject *parent = nullptr);
     void tcpConnect(const QHostAddress ipAddress, const quint16 port);
+    void sendMsg(QByteArray msg);
 
 public slots:
 
