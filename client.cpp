@@ -37,9 +37,15 @@ void Client::sendMsg(QByteArray msg) {
         logOutput("Can't send empty message");
         return;
     }
-    socket->write(msg);
+    if (!msg.contains('\0')) {
+        logOutput("Appended 0 char to msg");
+        msg.append('\0');
+    }
+
+    qint64 written = socket->write(msg);
     if (socket->waitForBytesWritten()) {
         emit logOutput("Message sent");
+        emit logOutput(QString("%1: %2").arg(written).arg(QString(msg)));
     } else {
         emit logOutput("Message not sent");
     }
