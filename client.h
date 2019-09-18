@@ -25,6 +25,11 @@ private:
     QTcpSocket* socket = nullptr;
     QFile* outFile;
 
+    const int frameSize = 480*640;
+    const int pixelBytes = sizeof(quint16);
+
+    QByteArray inBuffer;
+
 private slots:
     void readTcpData();
     void onDisconnected();
