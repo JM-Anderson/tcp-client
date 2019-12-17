@@ -16,6 +16,10 @@ Client::Client(QObject *parent) : QObject(parent)
 */
 void Client::readTcpData()
 {
+    QFile file("test.envi");
+    file.open(QIODevice::WriteOnly);
+    QDataStream testOut(&file);
+
     inBuffer.append(socket->readAll());
 
     while (inBuffer.size() >= frameSize*pixelBytes) {
@@ -24,6 +28,7 @@ void Client::readTcpData()
         for (int i=0; i < frameSize; i++) {
             quint16 pix;
             pixStream >> pix;
+            testOut << pix;
             frame.append(pix);
         }
 
