@@ -16,6 +16,8 @@ Client::Client(QObject *parent) : QObject(parent)
 */
 void Client::readTcpData()
 {
+    emit logOutput("Reading...");
+
     QFile file("test.envi");
     file.open(QIODevice::WriteOnly);
     QDataStream testOut(&file);
